@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { MDBRow, MDBContainer, MDBCol } from 'mdbreact';
 import '../../App.css';
 
-export class Tables extends Component {
+export class Articles extends Component {
   render() {
     return (
       <MDBContainer className='main-container' fluid>
@@ -14,7 +14,7 @@ export class Tables extends Component {
         </MDBRow>
         <MDBRow>
           <MDBCol xl='9' xs='12' className='contentArea-container'>
-            <h3>Всякие таблички</h3>
+            <h3>Статьи</h3>
           </MDBCol>
           <MDBCol xl='3' xs='12' className='bannerRight-container'>
             <MDBRow>
@@ -40,4 +40,4 @@ export class Tables extends Component {
   }
 }
 
-export default Tables;
+export default Articles;

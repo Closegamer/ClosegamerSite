@@ -124,7 +124,13 @@ export class Navigator extends Component {
             </MDBSideNavCat>
           </MDBSideNavNav>
         </MDBSideNav>
-        <MDBNavbar double expand='md' fixed='top' scrolling transparent>
+        <MDBNavbar
+          double
+          expand='md'
+          fixed='top'
+          scrolling
+          color='default-color-dark'
+        >
           <div className='logo-cont text-center'>
             <MDBNavbarBrand href='/'>
               logo
@@ -182,52 +188,45 @@ export class Navigator extends Component {
                 </WaveComponent>
               </MDBNavItem>
             )}
+
             <MDBNavItem
-              active={this.props.location.pathname.includes('/tables')}
+              active={this.props.location.pathname.includes('/articles')}
             >
-              <MDBNavLink to='/tables'>
-                <MDBIcon icon='table' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Таблички</div>
+              <MDBNavLink to='/articles'>
+                <MDBIcon icon='newspaper' className='d-inline-inline' />{' '}
+                <div className='d-none d-md-inline'>Статьи</div>
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem
-              active={this.props.location.pathname.includes('/calculator')}
+              active={this.props.location.pathname.includes('/courses')}
             >
-              <MDBNavLink to='/calculator'>
-                <MDBIcon icon='calculator' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Калькуляторы</div>
+              <MDBNavLink to='/courses'>
+                <MDBIcon icon='user-graduate' className='d-inline-inline' />{' '}
+                <div className='d-none d-md-inline'>Курсы</div>
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem
-              active={this.props.location.pathname.includes('/robots')}
+              active={this.props.location.pathname.includes('/advertising')}
             >
-              <MDBNavLink to='/robots'>
-                <MDBIcon icon='robot' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Роботы</div>
+              <MDBNavLink to='/advertising'>
+                <MDBIcon icon='dollar-sign' className='d-inline-inline' />{' '}
+                <div className='d-none d-md-inline'>Реклама</div>
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem
-              active={this.props.location.pathname.includes('/windows')}
+              active={this.props.location.pathname.includes('/partners')}
             >
-              <MDBNavLink to='/windows'>
-                <MDBIcon icon='window-maximize' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Окна</div>
+              <MDBNavLink to='/partners'>
+                <MDBIcon icon='handshake' className='d-inline-inline' />{' '}
+                <div className='d-none d-md-inline'>Партнеры</div>
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem
-              active={this.props.location.pathname.includes('/loads')}
+              active={this.props.location.pathname.includes('/contacts')}
             >
-              <MDBNavLink to='/loads'>
-                <MDBIcon icon='weight' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Прогрузы</div>
-              </MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem
-              active={this.props.location.pathname.includes('/bookmakers')}
-            >
-              <MDBNavLink to='/bookmakers'>
-                <MDBIcon icon='chart-bar' className='d-inline-inline' />{' '}
-                <div className='d-none d-md-inline'>Букмекеры</div>
+              <MDBNavLink to='/contacts'>
+                <MDBIcon icon='comments' className='d-inline-inline' />{' '}
+                <div className='d-none d-md-inline'>Контакты</div>
               </MDBNavLink>
             </MDBNavItem>
 

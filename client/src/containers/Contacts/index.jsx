@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBRow, MDBContainer, MDBCol } from 'mdbreact';
 
-export class Stories extends Component {
+export class Contacts extends Component {
   render() {
     return (
       <MDBContainer className='main-container' fluid>
@@ -13,7 +13,7 @@ export class Stories extends Component {
         </MDBRow>
         <MDBRow>
           <MDBCol xl='9' xs='12' className='contentArea-container'>
-            <h3>Всякие истории</h3>
+            <h3>Контакты</h3>
           </MDBCol>
           <MDBCol xl='3' xs='12' className='bannerRight-container'>
             <MDBRow>
@@ -39,4 +39,4 @@ export class Stories extends Component {
   }
 }
 
-export default Stories;
+export default Contacts;
