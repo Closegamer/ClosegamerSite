@@ -176,19 +176,6 @@ export class Navigator extends Component {
             )}
           </MDBNavbarNav>
           <MDBNavbarNav right style={specialCaseNavbarStyles}>
-            {!isLoggedIn && (
-              <MDBNavItem>
-                <WaveComponent
-                  onClick={this.props.toggleLoginForm}
-                  tag='a'
-                  className='nav-link'
-                >
-                  <MDBIcon icon='sign-in-alt' className='d-inline-inline' />{' '}
-                  <div className='d-none d-md-inline'>Войти</div>
-                </WaveComponent>
-              </MDBNavItem>
-            )}
-
             <MDBNavItem
               active={this.props.location.pathname.includes('/articles')}
             >
@@ -229,7 +216,18 @@ export class Navigator extends Component {
                 <div className='d-none d-md-inline'>Контакты</div>
               </MDBNavLink>
             </MDBNavItem>
-
+            {!isLoggedIn && (
+              <MDBNavItem>
+                <WaveComponent
+                  onClick={this.props.toggleLoginForm}
+                  tag='a'
+                  className='nav-link'
+                >
+                  <MDBIcon icon='sign-in-alt' className='d-inline-inline' />{' '}
+                  <div className='d-none d-md-inline'>Войти</div>
+                </WaveComponent>
+              </MDBNavItem>
+            )}
             {isLoggedIn && (
               <React.Fragment>
                 <MDBNavItem>

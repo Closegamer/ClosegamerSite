@@ -5,18 +5,22 @@ import classNames from 'classnames';
 import { MDBCard, MDBRow, MDBCol, MDBIcon, MDBBtn } from 'mdbreact';
 import { TextField, PassField } from '../../fields';
 import emailValidator from 'email-validator';
+import '../../App.css';
 
 const LoginForm = props => {
   const { handleSubmit, submitting, error, classes, toggleFormType } = props;
   return (
     <form onSubmit={handleSubmit} className={classes.form} autoComplete='off'>
       <MDBCard className={classes.card}>
-        <div className='text-white rgba-stylish-strong py-5 px-5 z-depth-4 form-dark'>
+        <div
+          className='text-white rgba-stylish-strong py-5 px-5 z-depth-4 login-form
+'
+        >
           <div className='text-center'>
             <h3 className='white-text mb-5 mt-4'>
-              <strong>Вход</strong>{' '}
+              <strong>Авторизация</strong>{' '}
               <small>
-                <MDBIcon icon='sign-in-alt' className='green-text' />
+                <MDBIcon icon='user' className='white-text' />
               </small>
             </h3>
           </div>
@@ -58,7 +62,6 @@ const LoginForm = props => {
             <div className='text-center mb-3 col-md-12'>
               <MDBBtn
                 color='success'
-                rounded
                 className='btn-block z-depth-1'
                 type='submit'
                 disabled={submitting}

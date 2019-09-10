@@ -84,12 +84,12 @@ router.post(
 
       const tokensData = await createTokenPair(payload, payload);
 
-      // sendMail(
-      //   'Pteat <***>',
-      //   email,
-      //   'Успешная регистрация',
-      //   `Ваш пароль: <b>${password}</b>`
-      // );
+      sendMail(
+        'Closegamer School <closegamer@mail.ru>',
+        email,
+        'Успешная регистрация',
+        `Ваш пароль: <b>${password}</b>`
+      );
 
       res.json({ success: true, tokens: tokensData });
     } catch (err) {

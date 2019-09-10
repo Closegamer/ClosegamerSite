@@ -1,19 +1,26 @@
 const nodemailer = require('nodemailer');
+const config = require('../config/default.json');
 
 const sendMail = (from, to, subject, html) => {
   const transporter = nodemailer.createTransport({
-    service: 'Yandex',
+    service: 'mail',
+    host: 'smtp.mail.ru',
+    port: 587,
+    secure: false,
+    requireTLS: false,
     auth: {
-      user: '',
-      pass: ''
+      user: config.mailUser,
+      pass: config.mailPassword
     }
   });
+
   const mailOptions = {
-    from, //'Pteat <***>',
-    to, //'***',
-    subject, //: 'Hello',
-    html //: '<b>test</b>'
+    from,
+    to,
+    subject,
+    html
   };
+
   transporter.sendMail(mailOptions, function(err, info) {
     if (err) {
       return console.log(err);

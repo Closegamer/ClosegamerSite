@@ -7,10 +7,11 @@ import injectSheet from 'react-jss';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import RecoveryForm from './RecoveryForm';
-// import signInImg from './../../img/signin.jpg';
+import signInImg from './../../img/bg_login.jpg';
 import './style.css';
 
 import { MDBContainer, MDBModal } from 'mdbreact';
+import { white } from 'ansi-colors';
 
 export class Login extends Component {
   static propTypes = {
@@ -123,8 +124,8 @@ const styles = {
   card: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    width: '100%'
-    // backgroundImage: `url(${signInImg})`
+    width: '100%',
+    backgroundImage: `url(${signInImg})`
   },
 
   link: {

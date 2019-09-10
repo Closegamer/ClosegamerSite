@@ -24,7 +24,7 @@ let RegisterForm = props => {
             <h3 className='white-text mb-5 mt-4'>
               <strong>Регистрация</strong>{' '}
               <small>
-                <MDBIcon icon='user-plus' className='green-text' />
+                <MDBIcon icon='user-plus' className='white-text' />
               </small>
             </h3>
           </div>
@@ -70,7 +70,6 @@ let RegisterForm = props => {
             <div className='text-center mb-3 col-md-12'>
               <MDBBtn
                 color='success'
-                rounded
                 className='btn-block z-depth-1'
                 type='submit'
                 disabled={!agree || submitting}

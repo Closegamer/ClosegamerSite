@@ -59,7 +59,6 @@ export class App extends Component {
           <div className='app'>
             <Navigator />
             <Routes />
-            <Footer />
             <LoginForm />
             <BalanceForm />
             <ToastContainer
@@ -67,6 +66,7 @@ export class App extends Component {
               newestOnTop={true}
               autoClose={3000}
             />
+            <Footer />
           </div>
         </Router>
       </Provider>

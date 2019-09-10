@@ -16,7 +16,7 @@ let RecoveryForm = props => {
             <h3 className='white-text mb-5 mt-4'>
               <strong>Забыли пароль?</strong>{' '}
               <small>
-                <MDBIcon icon='key' className='green-text' />
+                <MDBIcon icon='key' className='white-text' />
               </small>
             </h3>
           </div>
@@ -31,7 +31,6 @@ let RecoveryForm = props => {
             <div className='text-center mb-3 col-md-12'>
               <MDBBtn
                 color='success'
-                rounded
                 className='btn-block z-depth-1'
                 type='submit'
               >
