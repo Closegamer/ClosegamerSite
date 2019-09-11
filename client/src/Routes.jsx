@@ -11,6 +11,7 @@ const Courses = lazy(() => import('./containers/Courses'));
 const Contacts = lazy(() => import('./containers/Contacts'));
 const Advertising = lazy(() => import('./containers/Advertising'));
 const Admin = lazy(() => import('./containers/Admin'));
+const Recovery = lazy(() => import('./containers/Recovery'));
 
 function Routes(auth) {
   return (
@@ -22,6 +23,8 @@ function Routes(auth) {
         <Route exact path='/courses' component={Courses} />
         <Route exact path='/contacts' component={Contacts} />
         <Route exact path='/advertising' component={Advertising} />
+        <Route exact path='/recovery/' component={Recovery} />
+        <Route exact path='/recovery/:token' component={Recovery} />
         <PrivateRoute
           user={auth.user}
           path='/admin'

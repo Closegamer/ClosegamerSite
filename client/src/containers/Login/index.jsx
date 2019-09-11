@@ -47,7 +47,9 @@ export class Login extends Component {
   };
 
   onRecovery = values => {
-    console.log(values);
+    const email = values.email;
+    console.log('values: ', values);
+    return this.props.actions.resetPassword(email);
   };
 
   render() {

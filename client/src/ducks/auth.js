@@ -178,6 +178,37 @@ export const toggleLoginForm = dispatch => {
   return dispatch => dispatch({ type: TOGGLE_LOGIN_FORM });
 };
 
+// сброс пароля
+const USER_PASSWORD_RESET_START = `${prefix}/USER_PASSWORD_RESET_START`;
+const USER_PASSWORD_RESET_SUCCEED = `${prefix}/USER_PASSWORD_RESET_SUCCEED`;
+const USER_PASSWORD_RESET_FAILED = `${prefix}/USER_PASSWORD_RESET_FAILED`;
+
+const resetPasswordStart = () => ({
+  type: USER_PASSWORD_RESET_START
+});
+
+const resetPasswordSucceed = data => ({
+  type: USER_PASSWORD_RESET_SUCCEED,
+  data
+});
+
+const resetPasswordFailed = () => ({
+  type: USER_PASSWORD_RESET_FAILED
+});
+
+export const resetPassword = userEmail => (dispatch, getState) => {
+  console.log('userEmail: ', userEmail);
+  dispatch(resetPasswordStart());
+  return axios
+    .post('/api/users/reset', { userEmail })
+    .then(response => {
+      dispatch(resetPasswordSucceed(response.data));
+    })
+    .catch(error => {
+      dispatch(resetPasswordFailed(error.message));
+    });
+};
+
 const initialState = Immutable({
   showLoginForm: false,
   isLoggedIn: false,

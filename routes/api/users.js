@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
-const { createTokenPair } = require('../../utils/TokenHelpers');
+const {
+  createTokenPair,
+  createResetToken
+} = require('../../utils/TokenHelpers');
 const auth = require('../../middleware/auth');
 const sendMail = require('../../utils/sendMail');
 
@@ -166,5 +169,83 @@ router.post(
     }
   }
 );
+
+// @route    POST api/users/reset
+// @desc     Reset User Password
+// @access   Public
+router.post('/reset', async (req, res) => {
+  try {
+    const currentUserEmail = req.body.userEmail;
+    const foundUser = await User.findOne({ email: currentUserEmail });
+    const foundUserEmail = foundUser.email;
+    console.log('foundUser ', foundUser);
+    if (!foundUser) {
+      res.json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    const payload = {
+      user: {
+        id: foundUser.id
+      }
+    };
+
+    const tokenData = await createResetToken(payload);
+
+    const recoveryLink =
+      '<a href="http://localhost:3000/recovery/' +
+      tokenData.resetToken +
+      '">Сбросить пароль</a>';
+
+    sendMail(
+      'Closegamer School <closegamer@mail.ru>',
+      foundUserEmail,
+      'Сброс пароля',
+      `Перейди по ссылке, товарищ: <b>${recoveryLink}</b>`
+    );
+
+    res.json({
+      success: true,
+      tokenData
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/users/get-user-for-reset
+// @desc     Get user for reset password
+// @access   Public
+router.get('/reset-user-password/:token', async (req, res) => {
+  try {
+    console.log('req.body: ', req.body);
+    const resetToken = req.params.token;
+
+    const resetTokenFromTheBase = await Reset.findOne({ resetToken });
+
+    if (!resetTokenFromTheBase) {
+      return res
+        .status(401)
+        .json({ success: false, error: 'некорректная ссылка' });
+    }
+
+    if (resetTokenFromTheBase) {
+      console.log('reset token exists ', resetTokenFromTheBase);
+      var decodedResetToken = jwt.verify(
+        resetTokenFromTheBase.resetToken,
+        config.get('jwtResetSecret')
+      );
+
+      const user = await User.findById(decodedResetToken.user.id);
+      return res.json({ success: true, user });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({ error: 'Невалидный токен' });
+  }
+});
 
 module.exports = router;

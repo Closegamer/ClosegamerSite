@@ -3,6 +3,7 @@ const config = require('config');
 const uuid = require('uuid/v4');
 
 const Token = require('../models/Token');
+const Reset = require('../models/Reset');
 
 const createTokenPair = async (accessPayload, refreshPayload) => {
   const date = Date.now();
@@ -38,4 +39,29 @@ const createTokenPair = async (accessPayload, refreshPayload) => {
   };
 };
 
-module.exports = { createTokenPair };
+const createResetToken = async payload => {
+  const date = Date.now();
+  const resetExpired = 3600000;
+  const expiredDate = date + resetExpired * 1000;
+  const code = uuid();
+  const resetToken = await jwt.sign(
+    { ...payload, uuid: code },
+    config.get('jwtResetSecret'),
+    {
+      expiresIn: expiredDate
+    }
+  );
+
+  const query = {
+    user: payload.user.id,
+    resetToken: resetToken
+  };
+  await Reset.updateOne({ user: payload.user.id }, query, { new: true });
+
+  return {
+    resetToken,
+    expiredDate
+  };
+};
+
+module.exports = { createTokenPair, createResetToken };

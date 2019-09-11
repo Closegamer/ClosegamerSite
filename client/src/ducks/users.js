@@ -23,16 +23,11 @@ const loadUsersFailed = error => ({
   error
 });
 
-// const loadUsersCanceled = () => ({
-//   type: LOADING_USERS_CANCELED
-// });
-
 export const loadUsers = () => (dispatch, getState) => {
   dispatch(loadUsersStart());
   return axios
     .get('/api/admin/users/list')
     .then(response => {
-      dispatch(loadUsersSucceed(response.data.users));
       dispatch(loadUsersSucceed(response.data.users));
     })
     .catch(error => {
