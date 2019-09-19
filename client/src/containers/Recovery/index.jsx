@@ -13,7 +13,9 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
+import * as authActions from '../../ducks/auth';
 import './styles.css';
+import RecoveryFinalForm from './RecoveryFinalForm';
 
 export class Recovery extends Component {
   state = {
@@ -24,7 +26,6 @@ export class Recovery extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    console.log(this.props);
     if (match.params.token) {
       axios
         .get(`/api/users/reset-user-password/${match.params.token}`)
@@ -40,6 +41,7 @@ export class Recovery extends Component {
           }
         })
         .catch(error => {
+          console.log(error);
           this.setState({
             isLoading: false,
             error: error.response.data.error
@@ -49,7 +51,10 @@ export class Recovery extends Component {
   }
 
   handleSubmit = values => {
-    console.log('recovery on submit: ', values);
+    const password = values.password;
+    const user = this.state.user;
+    this.props.authActions.passwordRecovered(password, user);
+    this.props.history.push('/');
   };
 
   render() {
@@ -83,40 +88,7 @@ export class Recovery extends Component {
             <h3>Пользователь: {user.email}</h3>
             <MDBRow className='recoveryForm'>
               <MDBCol size={4}>
-                <form onSubmit={this.handleSubmit}>
-                  <div className='grey-text'>
-                    <label
-                      htmlFor='recoveryPasswordField'
-                      className='grey-text'
-                    >
-                      Новый пароль
-                    </label>
-                    <input
-                      type='password'
-                      id='recoveryPasswordField'
-                      name='password'
-                      className='form-control'
-                    />
-                    <label
-                      htmlFor='recoveryPasswordField2'
-                      className='grey-text'
-                    >
-                      Подтверждение пароля
-                    </label>
-                    <input
-                      type='password'
-                      id='recoveryPasswordField2'
-                      name='password2'
-                      className='form-control'
-                    />
-                  </div>
-                  <br />
-                  <div className='text-center'>
-                    <MDBBtn color='primary' type='submit'>
-                      Отправить
-                    </MDBBtn>
-                  </div>
-                </form>
+                <RecoveryFinalForm onSubmit={this.handleSubmit} />
               </MDBCol>
             </MDBRow>
           </MDBCol>
@@ -148,7 +120,9 @@ const mapStateToProps = ({ auth }) => ({
   user: auth.user.nick
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  authActions: bindActionCreators({ ...authActions }, dispatch)
+});
 
 export default connect(
   mapStateToProps,

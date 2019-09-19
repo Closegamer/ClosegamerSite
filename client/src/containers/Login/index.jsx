@@ -48,8 +48,13 @@ export class Login extends Component {
 
   onRecovery = values => {
     const email = values.email;
-    console.log('values: ', values);
-    return this.props.actions.resetPassword(email);
+    return this.props.actions.resetPassword(email).then(res => {
+      if (res.success) {
+        this.setState({ form: 'recovery' }, () =>
+          this.props.actions.toggleLoginForm()
+        );
+      }
+    });
   };
 
   render() {

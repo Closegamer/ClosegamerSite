@@ -8,6 +8,7 @@ import { TextField } from '../../fields';
 
 let RecoveryForm = props => {
   const { handleSubmit, classes, toggleFormType } = props;
+
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
       <MDBCard className={classes.card}>

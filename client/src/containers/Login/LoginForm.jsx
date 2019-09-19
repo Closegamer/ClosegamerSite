@@ -12,10 +12,7 @@ const LoginForm = props => {
   return (
     <form onSubmit={handleSubmit} className={classes.form} autoComplete='off'>
       <MDBCard className={classes.card}>
-        <div
-          className='text-white rgba-stylish-strong py-5 px-5 z-depth-4 login-form
-'
-        >
+        <div className='text-white rgba-stylish-strong py-5 px-5 z-depth-4 login-form'>
           <div className='text-center'>
             <h3 className='white-text mb-5 mt-4'>
               <strong>Авторизация</strong>{' '}

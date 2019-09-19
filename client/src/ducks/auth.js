@@ -183,6 +183,8 @@ const USER_PASSWORD_RESET_START = `${prefix}/USER_PASSWORD_RESET_START`;
 const USER_PASSWORD_RESET_SUCCEED = `${prefix}/USER_PASSWORD_RESET_SUCCEED`;
 const USER_PASSWORD_RESET_FAILED = `${prefix}/USER_PASSWORD_RESET_FAILED`;
 
+const USER_PASSWORD_RECOVERY_FAILED = `${prefix}/USER_PASSWORD_RECOVERY_FAILED`;
+
 const resetPasswordStart = () => ({
   type: USER_PASSWORD_RESET_START
 });
@@ -196,16 +198,60 @@ const resetPasswordFailed = () => ({
   type: USER_PASSWORD_RESET_FAILED
 });
 
+const passwordRecoveryFailed = error => ({
+  type: USER_PASSWORD_RECOVERY_FAILED,
+  error
+});
+
+export const passwordRecovered = (password, user) => (dispatch, getState) => {
+  return axios
+    .post('/api/users/password-recovered', { password, user })
+    .then(response => {
+      toast.success(
+        <span style={{ color: 'white' }}>
+          <MDBIcon far icon='check-circle' /> Пароль успешно обновлен
+        </span>,
+        {
+          closeButton: false,
+          position: 'bottom-left'
+        }
+      );
+      return response;
+    })
+    .then(response => {
+      const email = response.data.email;
+      const password = response.data.password;
+
+      dispatch(login({ email, password }));
+
+      return response.data;
+    })
+    .catch(error => {
+      dispatch(resetPasswordFailed(error.message));
+      throw new SubmissionError({ _error: error.response.data.error });
+    });
+};
+
 export const resetPassword = userEmail => (dispatch, getState) => {
-  console.log('userEmail: ', userEmail);
   dispatch(resetPasswordStart());
   return axios
     .post('/api/users/reset', { userEmail })
     .then(response => {
       dispatch(resetPasswordSucceed(response.data));
+      toast.success(
+        <span style={{ color: 'white' }}>
+          <MDBIcon far icon='check-circle' /> Ссылка на сброс пароля отправлена
+          Вам на почту
+        </span>,
+        {
+          closeButton: false,
+          position: 'bottom-left'
+        }
+      );
+      return response.data;
     })
     .catch(error => {
-      dispatch(resetPasswordFailed(error.message));
+      dispatch(passwordRecoveryFailed(error.message));
     });
 };
 

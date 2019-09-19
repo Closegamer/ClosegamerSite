@@ -178,7 +178,6 @@ router.post('/reset', async (req, res) => {
     const currentUserEmail = req.body.userEmail;
     const foundUser = await User.findOne({ email: currentUserEmail });
     const foundUserEmail = foundUser.email;
-    console.log('foundUser ', foundUser);
     if (!foundUser) {
       res.json({
         success: false,
@@ -221,7 +220,6 @@ router.post('/reset', async (req, res) => {
 // @access   Public
 router.get('/reset-user-password/:token', async (req, res) => {
   try {
-    console.log('req.body: ', req.body);
     const resetToken = req.params.token;
 
     const resetTokenFromTheBase = await Reset.findOne({ resetToken });
@@ -233,7 +231,6 @@ router.get('/reset-user-password/:token', async (req, res) => {
     }
 
     if (resetTokenFromTheBase) {
-      console.log('reset token exists ', resetTokenFromTheBase);
       var decodedResetToken = jwt.verify(
         resetTokenFromTheBase.resetToken,
         config.get('jwtResetSecret')
@@ -245,6 +242,41 @@ router.get('/reset-user-password/:token', async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ error: 'Невалидный токен' });
+  }
+});
+
+router.post('/password-recovered', async (req, res) => {
+  try {
+    const user = req.body.user;
+    const password = req.body.password;
+    const salt = await bcrypt.genSalt(10);
+    const userToUpdate = await User.findById(user._id);
+
+    if (userToUpdate) {
+      newPassword = await bcrypt.hash(password, salt);
+
+      await User.updateOne(
+        { _id: user._id },
+        { password: newPassword },
+        { new: false }
+      );
+
+      sendMail(
+        'Closegamer School <closegamer@mail.ru>',
+        userToUpdate.email,
+        'Ваш пароль сброшен.',
+        `Новый пароль: ${password}`
+      );
+
+      return res.json({
+        success: true,
+        email: userToUpdate.email,
+        password: password
+      });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({ error: 'Восстановить пароль не получилось' });
   }
 });
 
