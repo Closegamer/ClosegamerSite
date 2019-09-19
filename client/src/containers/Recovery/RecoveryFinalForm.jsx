@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import classNames from 'classnames';
-import { MDBCard, MDBRow, MDBCol, MDBIcon, MDBBtn } from 'mdbreact';
-import { TextField, PassField } from '../../fields';
+import { MDBBtn } from 'mdbreact';
+import { PassField } from '../../fields';
 import '../../App.css';
 
 const RecoveryFinalForm = props => {
@@ -30,14 +29,6 @@ const RecoveryFinalForm = props => {
     </form>
   );
 };
-
-// RecoveryFinalForm.propTypes = {
-//   classes: PropTypes.objectOf(PropTypes.any).isRequired
-// };
-
-// RecoveryFinalForm.defaultProps = {
-//   classes: {}
-// };
 
 const validate = values => {
   const errors = {};

@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import { MDBRow, MDBContainer, MDBCol } from 'mdbreact';
+import ContactForm from './contactForm';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as adminActions from '../../ducks/admin';
 
 export class Contacts extends Component {
+  handleSubmit = values => {
+    console.log('handleSubmit values: ', values);
+
+    this.props.adminActions.userSendMessage(null, null, null);
+    // this.props.history.push('/');
+  };
+
   render() {
     return (
       <MDBContainer className='main-container' fluid>
@@ -13,7 +24,12 @@ export class Contacts extends Component {
         </MDBRow>
         <MDBRow>
           <MDBCol xl='9' xs='12' className='contentArea-container'>
-            <h3>Контакты</h3>
+            <h3>Контактная форма</h3>
+            <MDBRow>
+              <MDBCol size={4}>
+                <ContactForm onSubmit={this.handleSubmit} />
+              </MDBCol>
+            </MDBRow>
           </MDBCol>
           <MDBCol xl='3' xs='12' className='bannerRight-container'>
             <MDBRow>
@@ -39,4 +55,8 @@ export class Contacts extends Component {
   }
 }
 
-export default Contacts;
+const mapDispatchToProps = dispatch => ({
+  adminActions: bindActionCreators({ ...adminActions }, dispatch)
+});
+
+export default connect(mapDispatchToProps)(Contacts);
