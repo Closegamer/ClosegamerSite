@@ -3,9 +3,8 @@ import axios from 'axios';
 import Immutable from 'seamless-immutable';
 import { SubmissionError } from 'redux-form';
 import { toast, MDBIcon } from 'mdbreact';
-import { getBalance } from './balance';
 
-const prefix = 'admin';
+const prefix = 'public';
 
 const SENDING_USER_MESSAGE_START = `${prefix}/SENDING_USER_MESSAGE_START`;
 const SENDING_USER_MESSAGE_SUCCEED = `${prefix}/SENDING_USER_MESSAGE_SUCCEED`;
@@ -29,9 +28,19 @@ export const userSendMessage = (user, header, message) => (
 ) => {
   dispatch(userSendMessageStart());
   return axios
-    .post('/api/admin/send-message')
+    .post('/api/public/send-message', { user, header, message })
     .then(response => {
       dispatch(userSendMessageSucceed());
+      toast.success(
+        <span style={{ color: 'white' }}>
+          <MDBIcon far icon='check-circle' /> Спасибо! Ваше сообщение отправлено
+          администратору
+        </span>,
+        {
+          closeButton: false,
+          position: 'bottom-left'
+        }
+      );
       return response.data;
     })
     .catch(error => {

@@ -41,7 +41,7 @@ export default class TextField extends Component {
         label={label}
         group={group}
         type={type}
-        autoComplete='off'
+        autoComplete={input.autoComplete}
         containerClass={containerClass}
         icon={icon}
         className={!!error ? 'is-invalid' : null}

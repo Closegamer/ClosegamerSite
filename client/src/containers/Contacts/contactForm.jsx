@@ -7,16 +7,21 @@ import './styles.css';
 
 const ContactForm = props => {
   const { handleSubmit } = props;
-
   return (
-    <form onSubmit={handleSubmit} autoComplete='off'>
+    <form onSubmit={handleSubmit} autoComplete='on'>
       <Field
-        name='header'
+        name='user'
         component={TextField}
-        label='Пользователь'
+        label={'Представьтесь, пожалуйста'}
         group
         type='text'
-        disabled
+      />
+      <Field
+        name='email'
+        component={TextField}
+        label={'Введите email'}
+        group
+        type='email'
       />
       <Field
         name='header'
