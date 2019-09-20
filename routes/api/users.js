@@ -280,4 +280,49 @@ router.post('/password-recovered', async (req, res) => {
   }
 });
 
+// @route    GET api/users/get-user-for-reset
+// @desc     Get user for reset password
+// @access   Public
+router.get('/reset-user-password/:token', async (req, res) => {
+  try {
+    const resetToken = req.params.token;
+
+    const resetTokenFromTheBase = await Reset.findOne({ resetToken });
+
+    if (!resetTokenFromTheBase) {
+      return res
+        .status(401)
+        .json({ success: false, error: 'некорректная ссылка' });
+    }
+
+    if (resetTokenFromTheBase) {
+      var decodedResetToken = jwt.verify(
+        resetTokenFromTheBase.resetToken,
+        config.get('jwtResetSecret')
+      );
+
+      const user = await User.findById(decodedResetToken.user.id);
+      return res.json({ success: true, user });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({ error: 'Невалидный токен' });
+  }
+});
+
+router.post('/load-users', async (req, res) => {
+  try {
+    const usersArray = await User.find();
+    if (usersArray) {
+      return res.json({
+        success: true,
+        usersArray
+      });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json({ error: 'Получить пользователей не получилось' });
+  }
+});
+
 module.exports = router;
